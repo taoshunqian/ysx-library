@@ -76,6 +76,10 @@ const props = defineProps({
     type: Array as PropType<NodeKey[]>,
     default: []
   },
+  updateList: {
+    type: Array as PropType<NodeKey[]>,
+    default: []
+  },
   showCheckbox: {
     type: Boolean,
     default: false
@@ -142,6 +146,41 @@ watchEffect(() => { // 只会调用一次
   // console.log('watchEffect :>> ', props.defaultCheckedKeys, props.source);
 });
 
+// 更新数据
+watch(() => props.updateList, newVal => {
+  for(let i=0;i<visibleList.value.length;i++) {
+    let item = visibleList.value[i];
+    for(let j=0;i<newVal.length; j++) {
+      if(item.name == newVal[j]["name"]) {
+        item["name"] = newVal[j]["newName"];
+      }
+    }
+  }
+});
+// --------------------可视区域的数据节点--------------------
+/*  var lastScrollTop = 0;
+ var scrollTimer = null;
+setTimeout(() => {
+  var scrollElement = document.getElementById('vir-tree-wrap');
+  scrollElement.addEventListener("scroll", function () {
+    clearTimeout(scrollTimer);
+    var currentScrollTop = scrollElement.scrollTop;
+    if (currentScrollTop !== lastScrollTop) {
+      lastScrollTop = currentScrollTop;
+      scrollTimer = setTimeout(function () {
+        let view_class = document.getElementsByClassName("node-title");
+        let visualData = [];
+        for(let i=0;i<view_class.length;i++) {
+          let item = view_class[i];
+          visualData.push(item.textContent);
+        }
+        console.log("可视区域的ids",visualData);
+        console.log('滚动已停止 ------------------------------');
+      }, 1_000); 
+    }
+  })
+}, 1000); */
+// ----------------------------------------------
 
 const visibleList = computed(() => {
   return flattenTreeData.value.filter((node) => {
