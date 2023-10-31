@@ -84,6 +84,10 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  updateList: {
+    type: Array as PropType<NodeKey[]>,
+    default: []
+  },
   renderNode: Function as PropType<RenderNodeFunc>,
   renderIcon: Function as PropType<RenderIconFunc>,
   loadData: Function as PropType<LoadDataFunc>,
